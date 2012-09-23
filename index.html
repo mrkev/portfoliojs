@@ -29,6 +29,10 @@
             display: block;
         }
 
+        #gallery {
+            padding-bottom: 16px;
+        }
+
         #gallery img {
             border-radius: 10px;
         }
@@ -50,7 +54,7 @@
         .tagline {
             font-family: 'Raleway', cursive;
             display: inline-block;
-            margin-left: 10px;
+            margin-left: 15px;
             margin-bottom: 25px;
         }
 
@@ -90,7 +94,7 @@
         .box-bottom {
             padding: 0 15px;
             box-shadow: -3px -3px 7px #CCC;
-            margin-top: 10px;
+            margin-top: 0px;
         }
 
         .gallery-nav {
@@ -105,6 +109,13 @@
         pre {
             padding: 15px;
             font-size: 12px;
+        }
+
+        @media screen and (max-width: 700px) {
+            .download { display: none; }
+
+            h1.logo-title { margin-bottom: 0; }
+            .tagline { margin-bottom: 10px; }
         }
 
         /* 
@@ -138,6 +149,7 @@
         $(document).ready(function() {
             var p = $("#gallery").portfolio({ logger: true});
             p.init();
+
             var p2 = $("#gallery2").portfolio({ logger: true});
             p2.init();
         }); // end of ready();
@@ -154,17 +166,20 @@
     <a href="https://dl.dropbox.com/u/1218282/Portfoliojs.compiled.zip" class="btn download pull-right">(Download) <strong>Portfoliojs.compiled.zip</strong></a>
 </div>
 
+<div class="clearfix"></div>
+
 <div id="content">
 
     <div id="gallery">
-        <img data-src="https://dl.dropbox.com/u/1218282/slideshow/1.jpg" data-title="Photo One" />
-        <img data-src="https://dl.dropbox.com/u/1218282/slideshow/2.jpg" data-title="Photo Two" />
+        <img data-src="https://dl.dropbox.com/u/1218282/slideshow/1.jpg" />
+        <img data-src="https://dl.dropbox.com/u/1218282/slideshow/2.jpg" />
         <img data-src="https://dl.dropbox.com/u/1218282/slideshow/3.jpg" />
         <img data-src="https://dl.dropbox.com/u/1218282/slideshow/4.jpg" />
         <img data-src="https://dl.dropbox.com/u/1218282/slideshow/5.jpg" />
         <img data-src="https://dl.dropbox.com/u/1218282/slideshow/6.jpg" />
         <img data-src="https://dl.dropbox.com/u/1218282/slideshow/7.jpg" />
         <img data-src="https://dl.dropbox.com/u/1218282/slideshow/8.jpg" />
+        <img data-src="https://dl.dropbox.com/u/1218282/slideshow/9.jpg" />
     </div> <!-- .gallery -->
 
     <div class="box-bottom">&nbsp;</div>
