@@ -32,7 +32,10 @@
         width: '100%',
         lightbox: false,
         showArrows: true,
-        logger: true
+        logger: false,
+        spinnerColor: '#000',
+        offsetLeft: -4,
+        opacityLightbox: '0.2'
     };
 
     // overriding default values
@@ -50,7 +53,7 @@
         version: "0.1v",
         init: function() {
 
-            portfolio.scrollToOptions={axis: 'x', easing: portfolio.easingMethod, offset: -4}
+            portfolio.scrollToOptions={axis: 'x', easing: portfolio.easingMethod, offset: {left: portfolio.offsetLeft}}
 
             // Responsive for Mobile
             if ($(window).width() <= 700) {
@@ -60,6 +63,8 @@
                 // override gallery height
                 portfolio.height = '200px';
             }
+
+            portfolio.selector_ = portfolio.selector.slice(1);
 
             // CSS Base
             $(this).css({
@@ -102,7 +107,7 @@
             $(this).find("img").first().addClass('active');
 
             if (portfolio.lightbox) {
-                $(gallery).find('img').not('.active').animate({opacity: '0.2'});
+                $(gallery).find('img').not('.active').animate({opacity: portfolio.opacityLightbox});
                 $(gallery).find('img.active').animate({opacity: '1'});
                 $(gallery).css({ 'overflow-x': 'hidden' });
             }
@@ -209,7 +214,7 @@
                     $(gallery).find('img').removeClass('active').first().addClass('active');
 
                     if (portfolio.lightbox) {
-                        $(gallery).find('img').not('.active').animate({opacity: '0.2'});
+                        $(gallery).find('img').not('.active').animate({opacity: portfolio.opacityLightbox});
                         $(gallery).find('img.active').animate({opacity: '1'});
                     }
                 }
@@ -227,7 +232,7 @@
                 $(next_img).addClass('active');
 
                 if (portfolio.lightbox) {
-                    $(gallery).find('img').not('.active').animate({opacity: '0.2'});
+                    $(gallery).find('img').not('.active').animate({opacity: portfolio.opacityLightbox});
                     $(gallery).find('img.active').animate({opacity: '1'});
                 }
 
@@ -264,7 +269,7 @@
                 $(prev_img).addClass('active');
 
                 if (portfolio.lightbox) {
-                    $(gallery).find('img').not('.active').animate({opacity: '0.2'});
+                    $(gallery).find('img').not('.active').animate({opacity: portfolio.opacityLightbox});
                     $(gallery).find('img.active').animate({opacity: '1'});
                 }
             }
@@ -280,7 +285,7 @@
             $(img).addClass('active');
 
             if (portfolio.lightbox) {
-                $(gallery).find('img').not('.active').animate({opacity: '0.2'});
+                $(gallery).find('img').not('.active').animate({opacity: portfolio.opacityLightbox});
                 $(gallery).find('img.active').animate({opacity: '1'});
             }
 
@@ -311,7 +316,7 @@
                     radius: 5, // The radius of the inner circle
                     corners: 1, // Corner roundness (0..1)
                     rotate: 0, // The rotation offset
-                    color: '#000', // #rgb or #rrggbb
+                    color: portfolio.spinnerColor, // #rgb or #rrggbb
                     speed: 1.5, // Rounds per second
                     trail: 72, // Afterglow percentage
                     shadow: false, // Whether to render a shadow
@@ -389,13 +394,13 @@
             show: function() {
                 if (portfolio.navigation.created) {
                     // arrows already exists, do not create again
-                    $('.gallery-arrow-left, .gallery-arrow-right').show();
-                    $('.gallery-arrow-left, .gallery-arrow-right').delay(6000).fadeOut();
+                    $('.' + portfolio.selector_ + '-arrow-left, .' + portfolio.selector_ + '-arrow-right').show();
+                    // $('.gallery-arrow-left, .gallery-arrow-right').delay(6000).fadeOut();
                 }
                 else {
                     // create arrows
-                    $(gallery).before('<span class="gallery-arrow-left"></span>').after('<span class="gallery-arrow-right"></span>');
-                    $(gallery).prev('.gallery-arrow-left').css({
+                    $(gallery).before('<span class="' + portfolio.selector_ + '-arrow-left"></span>').after('<span class="' + portfolio.selector_ + '-arrow-right"></span>');
+                    $(gallery).prev('.' + portfolio.selector_ + '-arrow-left').css({
                         position: 'absolute',
                         left: '8px',
                         height: portfolio.height,
@@ -406,7 +411,8 @@
                         'background-position': '8px',
                         opacity: '0.5'
                     });
-                    $(gallery).next('.gallery-arrow-right').css({
+
+                    $(gallery).next('.' + portfolio.selector_ + '-arrow-right').css({
                         position: 'absolute',
                         right: '0',
                         top: $(gallery).position().top,
@@ -419,15 +425,15 @@
                         opacity: '0.5'
                     });
 
-                    $(gallery).prev('.gallery-arrow-left').click(function(e) {
+                    $(gallery).prev('.' + portfolio.selector_ + '-arrow-left').click(function(e) {
                         portfolio.prev();
                     });
 
-                    $(gallery).next('.gallery-arrow-right').click(function(e) {
+                    $(gallery).next('.' + portfolio.selector_ + '-arrow-right').click(function(e) {
                         portfolio.next();
                     });
 
-                    $('.gallery-arrow-left, .gallery-arrow-right').hover(function(){
+                    $('.' + portfolio.selector_ + '-arrow-left, .' + portfolio.selector_ + '-arrow-right').hover(function(){
                         // Mouse In
                         $(this).css({ 'opacity': '1' });
                     }, 
@@ -440,14 +446,14 @@
                         portfolio.navigation.show();
                     });
 
-                    $('.gallery-arrow-left, .gallery-arrow-right').delay(6000).fadeOut();
+                    // $('.gallery-arrow-left, .gallery-arrow-right').delay(6000).fadeOut();
                     portfolio.navigation.created = true;
 
                 } // if.. else..
             }, // show() 
 
             hide: function() {
-                $('.gallery-arrow-left, .gallery-arrow-right').fadeOut();
+                $('.' + portfolio.selector_ + '-arrow-left, .' + portfolio.selector_ + '-arrow-right').fadeOut();
             }, // hide()
             created: false
         } // navigation
