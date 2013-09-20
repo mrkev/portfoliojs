@@ -70,11 +70,16 @@
                 'white-space': 'nowrap'
             });
 
-            $(this).find('img').css({
+            $(this).find('a').css({
                 display: 'inline-block',
                 'max-width': 'none',
                 height: portfolio.height,
                 width: 'auto'
+            });
+
+            $(this).find('img').css({
+                height: '100%',
+                'vertical-align': 'baseline'
             });
 
 
